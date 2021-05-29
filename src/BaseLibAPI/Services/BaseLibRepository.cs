@@ -1,0 +1,67 @@
+﻿using BaseLibAPI.DbContexts;
+using BaseLibAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BaseLibAPI.Services
+{
+    public class BaseLibRepository: IBaseLibRepository, IDisposable
+    {
+        private readonly BaseLibContext _context;
+
+        public BaseLibRepository(BaseLibContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public void AddBook(Book book)
+        {
+            if (book == null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+            _context.Books.Add(book);
+        }
+
+        public void DeleteBook(Book book)
+        {
+            _context.Books.Remove(book);
+        }
+
+        public Book GetBook(Guid bookId)
+        {
+            if (bookId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(bookId));
+            }
+            return _context.Books
+                .Where(book => book.Id == bookId).FirstOrDefault();
+        }
+
+        public IEnumerable<Book> GetBooks()
+        {
+            return _context.Books
+                .OrderBy(book => book.Title).ToList();
+        }
+
+        public void UpdateBook(Book book)
+        {
+            // no code in this implementation
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if( disposing )
+            {
+                //
+            }
+        }
+    }
+}
