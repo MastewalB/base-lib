@@ -4,6 +4,8 @@ using BaseLibAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseLibAPI.ModelDTOs;
+using AutoMapper;
 
 namespace BaseLibAPI.Controllers
 {
@@ -12,18 +14,22 @@ namespace BaseLibAPI.Controllers
     public class BooksController: ControllerBase
     {
         private readonly IBaseLibRepository _baseLibRepository;
+        private readonly IMapper _mapper;
 
-        public BooksController(IBaseLibRepository baseLibRepository)
+        public BooksController(IBaseLibRepository baseLibRepository, IMapper mapper)
         {
             _baseLibRepository = baseLibRepository ??
                 throw new ArgumentNullException(nameof(baseLibRepository));
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
-        public IActionResult GetBooks()
+        public ActionResult<IEnumerable<BookDto>> GetBooks()
         {
             var booksFromRepo = _baseLibRepository.GetBooks();
-            return Ok(booksFromRepo);
+
+            return Ok(_mapper.Map<IEnumerable<BookDto>>(booksFromRepo));
         }
 
         [HttpGet("{bookId}")]
@@ -36,7 +42,7 @@ namespace BaseLibAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(bookFromRepo);
+            return Ok(_mapper.Map<BookDto>(bookFromRepo));
         }
     }
 }
