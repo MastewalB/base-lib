@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using BaseLibAPI.Services;
+using BaseLibAPI.DbContexts;
 
 namespace BaseLibAPI
 {
@@ -27,7 +30,18 @@ namespace BaseLibAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers( setupAction =>
+                {
+                setupAction.ReturnHttpNotAcceptable = true;
+                }).AddXmlDataContractSerializerFormatters();
+
+            services.AddScoped<IBaseLibRepository, BaseLibRepository>();
+
+            services.AddDbContext<BaseLibContext>(options =>
+            {
+                options.UseSqlServer(
+                    @"Server=(localdb)\mssqllocaldb;Database=BaseLibDB;Trusted_Connection=True;");
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BaseLibAPI", Version = "v1" });
