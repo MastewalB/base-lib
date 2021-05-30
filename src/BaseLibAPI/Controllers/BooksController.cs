@@ -24,7 +24,8 @@ namespace BaseLibAPI.Controllers
                 throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet]
+        [HttpGet()]
+        [HttpHead]
         public ActionResult<IEnumerable<BookDto>> GetBooks()
         {
             var booksFromRepo = _baseLibRepository.GetBooks();
