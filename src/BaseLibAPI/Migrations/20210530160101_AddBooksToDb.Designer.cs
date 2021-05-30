@@ -3,15 +3,17 @@ using System;
 using BaseLibAPI.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BaseLibAPI.Migrations
 {
     [DbContext(typeof(BaseLibContext))]
-    partial class BaseLibContextModelSnapshot : ModelSnapshot
+    [Migration("20210530160101_AddBooksToDb")]
+    partial class AddBooksToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
