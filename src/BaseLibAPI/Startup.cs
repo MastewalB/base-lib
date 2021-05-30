@@ -42,8 +42,8 @@ namespace BaseLibAPI
 
             services.AddDbContext<BaseLibContext>(options =>
             {
-                options.UseSqlServer(
-                    @"Server=(localdb)\mssqllocaldb;Database=BaseLibDB;Trusted_Connection=True;");
+                options.UseNpgsql(
+                    Configuration.GetConnectionString("PostgreSqlConnection"));
             });
             services.AddSwaggerGen(c =>
             {
