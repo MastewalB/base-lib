@@ -15,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using BaseLibAPI.Services;
 using BaseLibAPI.DbContexts;
 using Microsoft.AspNetCore.Http;
+using Npgsql;
 
 namespace BaseLibAPI
 {
@@ -30,6 +31,11 @@ namespace BaseLibAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new NpgsqlConnectionStringBuilder();
+            builder.ConnectionString = 
+                Configuration.GetConnectionString("PostgreSqlConnection");
+                builder.Username = Configuration["UserID"];
+                builder.Password = Configuration["Password"];
 
             services.AddControllers( setupAction =>
                 {
@@ -42,8 +48,7 @@ namespace BaseLibAPI
 
             services.AddDbContext<BaseLibContext>(options =>
             {
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("PostgreSqlConnection"));
+                options.UseNpgsql(builder.ConnectionString);
             });
             services.AddSwaggerGen(c =>
             {
