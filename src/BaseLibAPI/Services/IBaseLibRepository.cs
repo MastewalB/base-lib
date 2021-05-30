@@ -9,7 +9,7 @@ namespace BaseLibAPI.Services
     public interface IBaseLibRepository
     {
         IEnumerable<Book> GetBooks();
-        Book GetBook(Guid bookId);
+        Book GetBook(int bookId);
         void AddBook(Book book);
         void UpdateBook(Book book);
         void DeleteBook(Book book);

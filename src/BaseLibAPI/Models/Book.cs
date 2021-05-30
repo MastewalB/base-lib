@@ -9,7 +9,7 @@ namespace BaseLibAPI.Models
     public class Book
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -27,5 +27,7 @@ namespace BaseLibAPI.Models
         public int Edition { get; set; }
 
         public string Description { get; set; }
+        public string CoverImg { get; set; }
+        public string SkillLevel { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace BaseLibAPI.Controllers
         }
 
         [HttpGet("{bookId}")]
-        public IActionResult GetBook(Guid bookId)
+        public IActionResult GetBook(int bookId)
         {
             var bookFromRepo = _baseLibRepository.GetBook(bookId);
 

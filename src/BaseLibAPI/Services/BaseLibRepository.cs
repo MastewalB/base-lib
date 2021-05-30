@@ -30,12 +30,8 @@ namespace BaseLibAPI.Services
             _context.Books.Remove(book);
         }
 
-        public Book GetBook(Guid bookId)
+        public Book GetBook(int bookId)
         {
-            if (bookId == Guid.Empty)
-            {
-                throw new ArgumentNullException(nameof(bookId));
-            }
             return _context.Books
                 .Where(book => book.Id == bookId).FirstOrDefault();
         }
