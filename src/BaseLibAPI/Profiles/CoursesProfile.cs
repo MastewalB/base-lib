@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BaseLibAPI.Helpers;
+using BaseLibAPI.Models;
+using BaseLibAPI.ModelDTOs;
 
 namespace BaseLibAPI.Profiles
 {
@@ -11,11 +13,13 @@ namespace BaseLibAPI.Profiles
     {
         public CoursesProfile()
         {
-            CreateMap<Models.Course, ModelDTOs.CourseReadDto>()
+            CreateMap<Course, CourseReadDto>()
                 /*.ForMember(
                 dest => dest.BookResources,
                 opt => opt.MapFrom(src => src.Id.GetCourseResources()));*/
                 ;
+
+            CreateMap<CourseCreateDto, Course>();
         }
     }
 }

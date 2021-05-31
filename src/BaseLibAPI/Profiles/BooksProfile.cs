@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BaseLibAPI.Models;
+using BaseLibAPI.ModelDTOs;
 
 namespace BaseLibAPI.Profiles
 {
@@ -10,8 +12,8 @@ namespace BaseLibAPI.Profiles
     {
         public BooksProfile()
         {
-            CreateMap<Models.Book, ModelDTOs.BookDto>();
-
+            CreateMap<Book, BookDto>();
+            CreateMap<BookForCreationDto, Book>();
         }
     }
 }
