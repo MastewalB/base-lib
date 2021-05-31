@@ -26,7 +26,7 @@ namespace BaseLibAPI
                     var context = scope.ServiceProvider.GetService<BaseLibContext>();
                     // for demo purposes, delete the database & migrate on startup so 
                     // we can start with a clean slate
-                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
                     context.Database.Migrate();
                 }
                 catch (Exception ex)
