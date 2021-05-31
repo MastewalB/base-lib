@@ -45,5 +45,21 @@ namespace BaseLibAPI.Controllers
 
             return Ok(_mapper.Map<CourseReadDto>(courseFromRepo));
         }
+
+        [HttpPut("{courseId}")]
+        public ActionResult UpdateCourse(int courseId, CourseUpdateDto courseUpdateDto)
+        {
+            var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
+            if (courseModelFromRepo == null)
+            {
+                return NotFound();
+
+            }
+            _mapper.Map(courseUpdateDto, courseModelFromRepo);
+            _baseLibRepository.UpdateCourse(courseModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

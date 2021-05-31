@@ -60,5 +60,21 @@ namespace BaseLibAPI.Controllers
             return CreatedAtRoute("GetBook",
                 new { bookId = bookReadDto.Id}, bookReadDto);
         }
+
+        [HttpPut("{bookId}")]
+        public ActionResult UpdateBook(int bookId, BookUpdateDto bookUpdateDto)
+        {
+            var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
+            if(bookModelFromRepo == null)
+            {
+                return NotFound();
+
+            }
+            _mapper.Map(bookUpdateDto, bookModelFromRepo);
+            _baseLibRepository.UpdateBook(bookModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
