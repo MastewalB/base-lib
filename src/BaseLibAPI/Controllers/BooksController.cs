@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLibAPI.ModelDTOs;
+using BaseLibAPI.Models;
 using AutoMapper;
 
 namespace BaseLibAPI.Controllers
@@ -33,7 +34,7 @@ namespace BaseLibAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<BookDto>>(booksFromRepo));
         }
 
-        [HttpGet("{bookId}")]
+        [HttpGet("{bookId}", Name = "GetBook")]
         public IActionResult GetBook(int bookId)
         {
             var bookFromRepo = _baseLibRepository.GetBook(bookId);
@@ -44,6 +45,20 @@ namespace BaseLibAPI.Controllers
             }
 
             return Ok(_mapper.Map<BookDto>(bookFromRepo));
+        }
+
+
+        //Create Book
+        [HttpPost]
+        public ActionResult<BookDto> CreateBook(BookForCreationDto bookForCreationDto)
+        {
+            var bookModel = _mapper.Map<Book>(bookForCreationDto);
+            _baseLibRepository.AddBook(bookModel);
+            _baseLibRepository.SaveChanges();
+
+            var bookReadDto = _mapper.Map<BookDto>(bookModel);
+            return CreatedAtRoute("GetBook",
+                new { bookId = bookReadDto.Id}, bookReadDto);
         }
     }
 }
