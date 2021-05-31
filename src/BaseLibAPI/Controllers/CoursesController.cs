@@ -32,5 +32,18 @@ namespace BaseLibAPI.Controllers
             var coursesFromRepo = _baseLibRepository.GetCourses();
             return Ok(_mapper.Map<IEnumerable<CourseReadDto>>(coursesFromRepo));
         }
+
+        [HttpGet("{courseId}", Name = "GetCourse")]
+        public IActionResult GetCourse(int courseId)
+        {
+            var courseFromRepo = _baseLibRepository.GetCourse(courseId);
+
+            if (courseFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<CourseReadDto>(courseFromRepo));
+        }
     }
 }
