@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BaseLibAPI.ModelDTOs;
 using BaseLibAPI.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace BaseLibAPI.Controllers
 {
@@ -71,6 +72,30 @@ namespace BaseLibAPI.Controllers
 
             }
             _mapper.Map(bookUpdateDto, bookModelFromRepo);
+            _baseLibRepository.UpdateBook(bookModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{bookId}")]
+        public ActionResult PartialBookUpdate(int bookId, JsonPatchDocument<BookUpdateDto> patchDoc)
+        {
+            var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
+            if (bookModelFromRepo == null)
+            {
+                return NotFound();
+
+            }
+            var bookToPatch = _mapper.Map<BookUpdateDto>(bookModelFromRepo);
+            patchDoc.ApplyTo(bookToPatch, ModelState);
+
+            if (!TryValidateModel(bookToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(bookToPatch, bookModelFromRepo);
             _baseLibRepository.UpdateBook(bookModelFromRepo);
             _baseLibRepository.SaveChanges();
 

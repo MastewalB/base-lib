@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using BaseLibAPI.ModelDTOs;
 using BaseLibAPI.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
+
 
 namespace BaseLibAPI.Controllers
 {
@@ -56,6 +58,30 @@ namespace BaseLibAPI.Controllers
 
             }
             _mapper.Map(courseUpdateDto, courseModelFromRepo);
+            _baseLibRepository.UpdateCourse(courseModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{courseId}")]
+        public ActionResult PartialCourseUpdate(int courseId, JsonPatchDocument<CourseUpdateDto> patchDoc)
+        {
+            var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
+            if (courseModelFromRepo == null)
+            {
+                return NotFound();
+
+            }
+            var courseToPatch = _mapper.Map<CourseUpdateDto>(courseModelFromRepo);
+            patchDoc.ApplyTo(courseToPatch, ModelState);
+
+            if (!TryValidateModel(courseToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(courseToPatch, courseModelFromRepo);
             _baseLibRepository.UpdateCourse(courseModelFromRepo);
             _baseLibRepository.SaveChanges();
 
