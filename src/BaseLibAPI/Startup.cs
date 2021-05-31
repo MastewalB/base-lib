@@ -16,6 +16,7 @@ using BaseLibAPI.Services;
 using BaseLibAPI.DbContexts;
 using Microsoft.AspNetCore.Http;
 using Npgsql;
+using Newtonsoft.Json.Serialization;
 
 namespace BaseLibAPI
 {
@@ -41,6 +42,13 @@ namespace BaseLibAPI
                 {
                 setupAction.ReturnHttpNotAcceptable = true;
                 }).AddXmlDataContractSerializerFormatters();
+
+            services.AddControllers().AddNewtonsoftJson( s =>
+                {
+                    s.SerializerSettings.ContractResolver = new
+                    CamelCasePropertyNamesContractResolver();
+                }
+                );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
