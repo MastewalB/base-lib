@@ -101,5 +101,19 @@ namespace BaseLibAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{bookId}")]
+        public ActionResult DeleteBook(int bookId)
+        {
+            var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
+            if (bookModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _baseLibRepository.DeleteBook(bookModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

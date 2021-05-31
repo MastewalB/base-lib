@@ -87,5 +87,19 @@ namespace BaseLibAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{courseId}")]
+        public ActionResult DeleteCourse(int courseId)
+        {
+            var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
+            if (courseModelFromRepo == null)
+            {
+                return NotFound();
+            }
+            _baseLibRepository.DeleteCourse(courseModelFromRepo);
+            _baseLibRepository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
