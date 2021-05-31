@@ -8,11 +8,21 @@ namespace BaseLibAPI.Services
 {
     public interface IBaseLibRepository
     {
+        //Book Services
         IEnumerable<Book> GetBooks();
         Book GetBook(int bookId);
         void AddBook(Book book);
         void UpdateBook(Book book);
         void DeleteBook(Book book);
+
+        //Course Services
+
+        //BookResource Services
+        /*IEnumerable<BookResourse> GetBookResourses();
+        BookResourse GetBookResourse(int resourseId);
+        void AddBookResourse();
+        void UpdateBookResourse();
+        void DeleteBookResouse();*/
 
     }
 }
