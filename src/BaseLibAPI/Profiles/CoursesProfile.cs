@@ -20,6 +20,8 @@ namespace BaseLibAPI.Profiles
                 ;
 
             CreateMap<CourseCreateDto, Course>();
+            CreateMap<CourseUpdateDto, Course>();
+            CreateMap<Course, CourseUpdateDto>();
         }
     }
 }

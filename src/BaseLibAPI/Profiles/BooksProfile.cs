@@ -14,6 +14,8 @@ namespace BaseLibAPI.Profiles
         {
             CreateMap<Book, BookDto>();
             CreateMap<BookForCreationDto, Book>();
+            CreateMap<BookUpdateDto, Book>();
+            CreateMap<Book, BookUpdateDto>();
         }
     }
 }
