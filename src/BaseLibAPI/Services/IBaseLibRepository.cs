@@ -18,7 +18,8 @@ namespace BaseLibAPI.Services
         void DeleteBook(Book book);
 
         //Course Services
-        IEnumerable<Book> GetCourses();
+        IEnumerable<Course> GetCourses();
+        Course GetCourse(int courseId);
 
 
         //BookResource Services

@@ -48,11 +48,19 @@ namespace BaseLibAPI.Services
         }
 
 
+        //course methods implementation
         public IEnumerable<Course> GetCourses()
         {
             return _context.Courses
                 .OrderBy(course => course.Title).ToList();
         }
+
+        public Course GetCourse(int courseId)
+        {
+            return _context.Courses
+                .Where(course => course.Id == courseId).FirstOrDefault();
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
