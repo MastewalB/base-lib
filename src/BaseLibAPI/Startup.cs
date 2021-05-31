@@ -17,6 +17,7 @@ using BaseLibAPI.DbContexts;
 using Microsoft.AspNetCore.Http;
 using Npgsql;
 using Newtonsoft.Json.Serialization;
+using BaseLibAPI.Helpers;
 
 namespace BaseLibAPI
 {
@@ -58,6 +59,11 @@ namespace BaseLibAPI
             {
                 options.UseNpgsql(builder.ConnectionString);
             });
+
+            services.AddAuthentication();
+
+            services.ConfigureIdentity();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BaseLibAPI", Version = "v1" });
@@ -88,6 +94,8 @@ namespace BaseLibAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
