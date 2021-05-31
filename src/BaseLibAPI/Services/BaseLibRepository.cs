@@ -61,6 +61,10 @@ namespace BaseLibAPI.Services
                 .Where(course => course.Id == courseId).FirstOrDefault();
         }
 
+        public void UpdateCourse(Course course)
+        {
+            // no code in this implementation
+        }
         public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
