@@ -8,6 +8,8 @@ namespace BaseLibAPI.Services
 {
     public interface IBaseLibRepository
     {
+
+        bool SaveChanges();
         //Book Services
         IEnumerable<Book> GetBooks();
         Book GetBook(int bookId);

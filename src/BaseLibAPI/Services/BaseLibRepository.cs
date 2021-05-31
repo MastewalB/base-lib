@@ -47,6 +47,11 @@ namespace BaseLibAPI.Services
             // no code in this implementation
         }
 
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -59,5 +64,7 @@ namespace BaseLibAPI.Services
                 //
             }
         }
+
+        
     }
 }
