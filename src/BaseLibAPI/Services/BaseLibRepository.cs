@@ -25,11 +25,6 @@ namespace BaseLibAPI.Services
             _context.Books.Add(book);
         }
 
-        public void DeleteBook(Book book)
-        {
-            _context.Books.Remove(book);
-        }
-
         public Book GetBook(int bookId)
         {
             return _context.Books
@@ -47,6 +42,14 @@ namespace BaseLibAPI.Services
             // no code in this implementation
         }
 
+        public void DeleteBook(Book book)
+        {
+            if( book == null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+            _context.Books.Remove(book);
+        }
 
         //course methods implementation
         public IEnumerable<Course> GetCourses()
@@ -70,6 +73,14 @@ namespace BaseLibAPI.Services
             return (_context.SaveChanges() >= 0);
         }
 
+        public void DeleteCourse(Course course)
+        {
+            if (course == null)
+            {
+                throw new ArgumentNullException(nameof(course));
+            }
+            _context.Courses.Remove(course);
+        }
         public void Dispose()
         {
             Dispose(true);

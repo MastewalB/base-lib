@@ -20,7 +20,8 @@ namespace BaseLibAPI.Services
         //Course Services
         IEnumerable<Course> GetCourses();
         Course GetCourse(int courseId);
-        void UpdateCourse(Course course);
+        void UpdateCourse(Course course); 
+        void DeleteCourse(Course course);
 
 
         //BookResource Services
