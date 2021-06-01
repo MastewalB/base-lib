@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BaseLibAPI.Authentication
 {
-    public static class Role //:IEntityTypeConfiguration<IdentityRole>
+    public class Role:IEntityTypeConfiguration<IdentityRole>
     {
 
-        public const string Admin = "Admin";
-        public const string User = "User";
+        /*public const string Admin = "Admin";
+        public const string User = "User";*/
 
-        /*public void Configure(EntityTypeBuilder<IdentityRole> builder)
+        public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
             builder.HasData(
                 new IdentityRole
@@ -28,6 +28,6 @@ namespace BaseLibAPI.Authentication
                     NormalizedName = "USER"
                 }
                 );
-        }*/
+        }
     }
 }
