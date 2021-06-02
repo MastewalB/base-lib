@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using BaseLibAPI.Services;
 using BaseLibAPI.DbContexts;
+using BaseLibAPI.Authentication;
 using Microsoft.AspNetCore.Http;
 using Npgsql;
 using Newtonsoft.Json.Serialization;
@@ -55,6 +56,8 @@ namespace BaseLibAPI
 
             services.AddScoped<IBaseLibRepository, BaseLibRepository>();
 
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
             services.AddDbContext<BaseLibContext>(options =>
             {
                 options.UseNpgsql(builder.ConnectionString);
@@ -63,6 +66,8 @@ namespace BaseLibAPI
             services.AddAuthentication();
 
             services.ConfigureIdentity();
+
+            services.ConfigureJWT(Configuration);
 
             services.AddSwaggerGen(c =>
             {
