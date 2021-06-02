@@ -8,7 +8,7 @@ using BaseLibAPI.ModelDTOs;
 using BaseLibAPI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace BaseLibAPI.Controllers
 {
@@ -48,7 +48,7 @@ namespace BaseLibAPI.Controllers
             return Ok(_mapper.Map<CourseReadDto>(courseFromRepo));
         }
 
-        [HttpPut("{courseId}")]
+        [HttpPut("{courseId}"), Authorize]
         public ActionResult UpdateCourse(int courseId, CourseUpdateDto courseUpdateDto)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
@@ -64,7 +64,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{courseId}")]
+        [HttpPatch("{courseId}"), Authorize]
         public ActionResult PartialCourseUpdate(int courseId, JsonPatchDocument<CourseUpdateDto> patchDoc)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
@@ -88,7 +88,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{courseId}")]
+        [HttpDelete("{courseId}"), Authorize]
         public ActionResult DeleteCourse(int courseId)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
