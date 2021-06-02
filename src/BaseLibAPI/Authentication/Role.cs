@@ -11,8 +11,7 @@ namespace BaseLibAPI.Authentication
     public class Role:IEntityTypeConfiguration<IdentityRole>
     {
 
-        /*public const string Admin = "Admin";
-        public const string User = "User";*/
+        
 
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
