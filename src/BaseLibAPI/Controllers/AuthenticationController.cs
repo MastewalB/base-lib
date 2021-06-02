@@ -16,11 +16,14 @@ namespace BaseLibAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IAuthenticationManager _authManager;
 
-        public AuthenticationController(IMapper mapper, UserManager<User> userManager)
+        public AuthenticationController(IMapper mapper,
+            UserManager<User> userManager, IAuthenticationManager authManager)
         {
             _mapper = mapper;
-            _userManager = userManager; 
+            _userManager = userManager;
+            _authManager = authManager;
         }
 
         [HttpPost]
@@ -40,5 +43,17 @@ namespace BaseLibAPI.Controllers
             await _userManager.AddToRoleAsync(user, userRegisterDto.Roles);
             return Ok();
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Authenticate([FromBody] UserLoginDto userLoginDto)
+        {
+            if(!await _authManager.ValidateUser(userLoginDto))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { Token = await _authManager.CreateToken() });
+        }
     }
+
 }
