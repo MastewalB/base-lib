@@ -48,7 +48,7 @@ namespace BaseLibAPI.Controllers
             return Ok(_mapper.Map<CourseReadDto>(courseFromRepo));
         }
 
-        [HttpPut("{courseId}"), Authorize]
+        [HttpPut("{courseId}"), Authorize(Roles = "Administrator")]
         public ActionResult UpdateCourse(int courseId, CourseUpdateDto courseUpdateDto)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
@@ -64,7 +64,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{courseId}"), Authorize]
+        [HttpPatch("{courseId}"), Authorize(Roles = "Administrator")]
         public ActionResult PartialCourseUpdate(int courseId, JsonPatchDocument<CourseUpdateDto> patchDoc)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);
@@ -88,7 +88,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{courseId}"), Authorize]
+        [HttpDelete("{courseId}"), Authorize(Roles = "Administrator")]
         public ActionResult DeleteCourse(int courseId)
         {
             var courseModelFromRepo = _baseLibRepository.GetCourse(courseId);

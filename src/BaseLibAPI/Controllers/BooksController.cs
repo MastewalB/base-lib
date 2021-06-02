@@ -8,6 +8,7 @@ using BaseLibAPI.ModelDTOs;
 using BaseLibAPI.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BaseLibAPI.Controllers
 {
@@ -50,7 +51,7 @@ namespace BaseLibAPI.Controllers
 
 
         //Create Book
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Administrator")]
         public ActionResult<BookDto> CreateBook(BookForCreationDto bookForCreationDto)
         {
             var bookModel = _mapper.Map<Book>(bookForCreationDto);
@@ -62,7 +63,7 @@ namespace BaseLibAPI.Controllers
                 new { bookId = bookReadDto.Id}, bookReadDto);
         }
 
-        [HttpPut("{bookId}")]
+        [HttpPut("{bookId}"), Authorize(Roles = "Administrator")]
         public ActionResult UpdateBook(int bookId, BookUpdateDto bookUpdateDto)
         {
             var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
@@ -78,7 +79,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{bookId}")]
+        [HttpPatch("{bookId}"), Authorize(Roles = "Administrator")]
         public ActionResult PartialBookUpdate(int bookId, JsonPatchDocument<BookUpdateDto> patchDoc)
         {
             var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
@@ -102,7 +103,7 @@ namespace BaseLibAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{bookId}")]
+        [HttpDelete("{bookId}"), Authorize(Roles = "Administrator")]
         public ActionResult DeleteBook(int bookId)
         {
             var bookModelFromRepo = _baseLibRepository.GetBook(bookId);
