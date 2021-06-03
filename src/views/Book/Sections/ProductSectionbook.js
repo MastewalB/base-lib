@@ -19,11 +19,12 @@ const useStyles = makeStyles(styles);
 
 export default function ProductSection() {
   const classes = useStyles();
+  // const name = props.name;
   return (
     <div className={classes.section}>
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Name of the book</h2>
+          <h2 className={classes.title}>{name}</h2>
           <h5 className={classes.description}>
             Description of the book... lorem ips
           </h5>

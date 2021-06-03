@@ -20,12 +20,15 @@ import styles from "assets/jss/material-kit-react/views/book.js";
 
 // Sections for this page
 import ProductSection from "./Sections/ProductSectionbook.js";
+import { useParams } from "react-router";
 // import TeamSection from "./Sections/TeamSection.js";
 // import WorkSection from "./Sections/WorkSection.js";
 
 const useStyles = makeStyles(styles);
 
 export default function LandingPage() {
+  const { name } = useParams();
+
   const classes = useStyles();
   return (
     <div>
@@ -69,7 +72,7 @@ export default function LandingPage() {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <ProductSection />
+          <ProductSection name={name} />
           {/* <TeamSection /> */}
           {/* <WorkSection /> */}
         </div>

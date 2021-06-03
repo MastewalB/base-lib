@@ -1,6 +1,11 @@
 import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import Datetime from "react-datetime";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 // @material-ui/icons
 
@@ -17,6 +22,10 @@ const useStyles = makeStyles(styles);
 
 export default function WorkSection() {
   const classes = useStyles();
+  const [level, setLevel] = React.useState(" ");
+  const handleChange = (event) => {
+    setLevel(event.target.value);
+  };
   return (
     <div className={classes.section}>
       <GridContainer justify="center">
@@ -117,12 +126,38 @@ export default function WorkSection() {
               </GridItem>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
-                  labelText="Author Name"
-                  id="instructor"
+                  labelText="Publisher"
+                  id="publisher"
                   formControlProps={{
                     fullWidth: true,
                   }}
                 />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <br />
+                <FormControl fullWidth>
+                  <Datetime
+                    inputProps={{ placeholder: "Datetime Picker Here" }}
+                  />
+                </FormControl>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <FormControl
+                  className={classes.formControl}
+                  style={{ minWidth: "100%" }}
+                >
+                  <InputLabel id="demo-simple-select-label">Level</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={level}
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={10}>Beginner</MenuItem>
+                    <MenuItem value={20}>intermediate</MenuItem>
+                    <MenuItem value={30}>Advanced</MenuItem>
+                  </Select>
+                </FormControl>
               </GridItem>
               <CustomInput
                 labelText="Book Description"
