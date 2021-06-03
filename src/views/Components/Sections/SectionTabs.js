@@ -25,7 +25,7 @@ import GridItem from "components/Grid/GridItem.js";
 // core components
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/tabsStyle.js";
-import img from "./book_default.jpg";
+import img from "assets/img/book_default.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -44,7 +44,7 @@ export default function SectionTabs() {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image="assets/img/bg4.jpg"
+                  image={img}
                   title="default"
                 />
                 <CardContent>

@@ -9,6 +9,9 @@ const tabsStyle = {
   textCenter: {
     textAlign: "center",
   },
+  media: {
+    height: 250,
+  },
 };
 
 export default tabsStyle;
