@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // import Divider from "@material-ui/core/Divider";
@@ -24,6 +24,7 @@ import GridItem from "components/Grid/GridItem.js";
 // @material-ui/icons
 // core components
 
+import axios from '../../axios.js'
 import styles from "assets/jss/material-kit-react/views/componentsSections/tabsStyle.js";
 import img from "assets/img/book_default.jpg";
 
@@ -31,6 +32,31 @@ const useStyles = makeStyles(styles);
 
 export default function SectionTabs() {
   const classes = useStyles();
+  const [bookList,setBookList] = useState([ {
+    id:1,
+    title:"1",
+    author:"1",
+    isbn:"asdf",
+    description:"uradfsdf"
+  },
+  {
+    id:2,
+    title:"2",
+    author:"2",
+    isbn:"sdhf",
+    description:"iudgsfi"
+  }])
+
+  useEffect(()=>{
+    axios.get('/books')
+    .then(res=> res.data).then(res=>{
+      setBookList(res)
+    })
+
+  },[])
+
+  
+
   return (
     <div className={classes.section}>
       <div className={classes.container}>
@@ -39,8 +65,11 @@ export default function SectionTabs() {
         </div>
         <GridContainer justify="center">
           {/* First row  */}
-          <GridItem xs={12} sm={12} md={4}>
-            <Card className={classes.root}>
+           
+          {bookList.map((book) => {
+            return(
+              <GridItem xs={12} sm={12} md={4} key = {book.id}>
+              <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -49,92 +78,29 @@ export default function SectionTabs() {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
+                   {book.title}
                   </Typography>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                   >
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging
+                {book.description}
                   </Typography>
                 </CardContent>
               </CardActionArea>
               <CardActions>
                 <Button size="small" color="primary">
-                  Share
+                  Open
                 </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
+                
               </CardActions>
             </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card className={classes.root}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={img}
-                  title="default"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
-            </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={4}>
-            <Card className={classes.root}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={img}
-                  title="default"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Share
-                </Button>
-                <Button size="small" color="primary">
-                  Learn More
-                </Button>
-              </CardActions>
-            </Card>
-          </GridItem>
+              </GridItem>
+            )
+          })
+        }
+
         </GridContainer>
       </div>
     </div>

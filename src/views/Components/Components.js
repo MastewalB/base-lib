@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
-import Header from "components/Header/Header.js";
+// import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -20,10 +20,10 @@ import styles from "assets/jss/material-kit-react/views/components.js";
 // import { Link } from "react-router-dom";
 // import HomeIcon from "@material-ui/icons/Home";
 // ==========================For the header====================================
-import Button from "components/CustomButtons/Button.js";
+// import Button from "components/CustomButtons/Button.js";
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
-import Grid from "@material-ui/core/grid";
+// import Grid from "@material-ui/core/grid";
 // import GridItem from "@material-ui/core/griditem";
 // ============================================================================
 
@@ -33,33 +33,6 @@ export default function Components() {
   const classes = useStyles();
   return (
     <div>
-      <Header
-        brand="Base-Lib"
-        rightLinks={
-          <Grid className={classes.list}>
-            <GridItem className={classes.listItem}>
-              <Button
-                style={{ marginRight: 25 }}
-                href="/login-page"
-                variant="outline-danger"
-                color="primary"
-                round
-              >
-                Login
-              </Button>
-              <Button
-                href="/signup-page"
-                className={classes.navLink}
-                variant="outline-danger"
-                color="primary"
-                round
-              >
-                Signup
-              </Button>
-            </GridItem>
-          </Grid>
-        }
-      />
       {/* End of header */}
       <Parallax image={require("assets/img/bg4.jpg").default}>
         <div className={classes.container}>

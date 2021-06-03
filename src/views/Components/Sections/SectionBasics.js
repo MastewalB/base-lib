@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // plugin that creates slider
 // import Slider from "nouislider";
 // @material-ui/core components
@@ -51,7 +51,13 @@ export default function SectionBasics() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState();
+  const[searchItem, setSearchItem] = useState('');
+  
 
+  function searchFunc(){
+    console.log(searchItem)
+  }
+  
   const handleChange = (event) => {
     setValue(event.target.value);
   };
@@ -67,8 +73,8 @@ export default function SectionBasics() {
         </div>
         <div className={classes.search}>
           <SearchBar
-            onChange={() => console.log("onChange")}
-            onRequestSearch={() => console.log("onRequestSearch")}
+            onChange={(value) => setSearchItem(value)}
+            onRequestSearch={searchFunc}
             style={{
               margin: "0 auto",
               maxWidth: 1200,

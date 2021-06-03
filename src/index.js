@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
+import Navbar from "components/NavBar/navbar.js";
 
 import "assets/scss/material-kit-react.scss?v=1.10.0";
 
@@ -17,6 +18,7 @@ var hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
+    <Navbar />
     <Switch>
       <Route path="/login-page" component={LoginPage} />
       <Route path="/signup-page" component={SignupPage} />
