@@ -1,48 +1,96 @@
-import React from "react";
+import React, { useState } from 'react';
+import axios from '../../axios';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import Datetime from "react-datetime";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import { makeStyles } from '@material-ui/core/styles';
+import Datetime from 'react-datetime';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import swal from 'sweetalert';
+// import classNames from 'classnames';
+
+// import styles1 from 'assets/jss/material-kit-react/components/customInputStyle.js';
 
 // @material-ui/icons
 
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
-import Divider from "@material-ui/core/Divider";
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import CustomInput from 'components/CustomInput/CustomInput.js';
+import Button from 'components/CustomButtons/Button.js';
+import Divider from '@material-ui/core/Divider';
 
-import styles from "assets/jss/material-kit-react/views/landingPageSections/workStyle.js";
+import styles from 'assets/jss/material-kit-react/views/landingPageSections/workStyle.js';
+// import { func } from 'prop-types';
 
 const useStyles = makeStyles(styles);
-
+// const useStyles1 = makeStyles(styles1);
 export default function WorkSection() {
-  const classes = useStyles();
-  const [level, setLevel] = React.useState(" ");
-  const handleChange = (event) => {
-    setLevel(event.target.value);
-  };
-  return (
-    <div className={classes.section}>
-      <GridContainer justify="center">
-        <GridItem cs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Modify Courses</h2>
-          <form>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                  labelText="Course Name"
-                  id="name"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              {/* <GridItem xs={12} sm={12} md={6}>
+	const classes = useStyles();
+	const [ addBook, setAddBook ] = useState({
+		title: '',
+		isbn: '',
+		author: '',
+		publisher: '',
+		publishDate: '',
+		edition: 0,
+		description: '',
+		coverImg: '',
+		skillLevel: 'beginner'
+	});
+
+	function addBookHandler(e) {
+		const { name, value } = e.target;
+		console.log(name);
+		setAddBook({ ...addBook, [name]: value });
+	}
+	function addBookSubmit(e) {
+		e.preventDefault();
+		console.log(addBook);
+
+		axios
+			.post(`books`, {
+				title: addBook.title,
+				author: addBook.author,
+				isbn: addBook.isbn,
+				publisher: addBook.publisher,
+				publishDate: addBook.publishDate.toString(),
+				description: addBook.description,
+				skillLevel: addBook.skillLevel
+			})
+			.then((res) => {
+				console.log(res);
+				swal('Book added successfully');
+
+				setAddBook({
+					title: '',
+					isbn: '',
+					author: '',
+					publisher: '',
+					publishDate: '',
+					edition: 0,
+					description: '',
+					coverImg: '',
+					skillLevel: 'beginner'
+				});
+			});
+	}
+
+	return (
+		<div className={classes.section}>
+			<GridContainer justify="center">
+				<GridItem cs={12} sm={12} md={8}>
+					<h2 className={classes.title}>Add Courses</h2>
+					<form>
+						<GridContainer>
+							<GridItem xs={12} sm={12} md={12}>
+								<InputLabel>Course Name</InputLabel>
+								<Input fullWidth={true} id="name" />
+							</GridItem>
+							{/* <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                   labelText="Instructor Name"
                   id="instructor"
@@ -51,19 +99,19 @@ export default function WorkSection() {
                   }}
                 />
               </GridItem> */}
-              <CustomInput
-                labelText="Course Description"
-                id="description"
-                formControlProps={{
-                  fullWidth: true,
-                  className: classes.textArea,
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 5,
-                }}
-              />
-              {/* <GridItem xs={12} sm={12} md={12}>
+							<CustomInput
+								labelText="Course Description"
+								id="description"
+								formControlProps={{
+									fullWidth: true,
+									className: classes.textArea
+								}}
+								inputProps={{
+									multiline: true,
+									rows: 5
+								}}
+							/>
+							{/* <GridItem xs={12} sm={12} md={12}>
                 <div className={classes.root}>
                   <input
                     accept="image/*"
@@ -83,95 +131,136 @@ export default function WorkSection() {
                   </label>
                 </div>
               </GridItem> */}
-              <GridItem xs={12} sm={12} md={4}>
-                <Button color="primary">Add Course</Button>
-              </GridItem>
-            </GridContainer>
-          </form>
-        </GridItem>
-      </GridContainer>
-      {/* For Modify books section */}
-      <Divider />
-      <GridContainer justify="center">
-        <GridItem cs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Modify Book</h2>
-          <form>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Title"
-                  id="title"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Author"
-                  id="author"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="ISBN"
-                  id="isbn"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Publisher"
-                  id="publisher"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <br />
-                <FormControl fullWidth>
-                  <Datetime
-                    inputProps={{ placeholder: "Datetime Picker Here" }}
-                  />
-                </FormControl>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <FormControl
-                  className={classes.formControl}
-                  style={{ minWidth: "100%" }}
-                >
-                  <InputLabel id="demo-simple-select-label">Level</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={level}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={10}>Beginner</MenuItem>
-                    <MenuItem value={20}>intermediate</MenuItem>
-                    <MenuItem value={30}>Advanced</MenuItem>
-                  </Select>
-                </FormControl>
-              </GridItem>
-              <CustomInput
-                labelText="Book Description"
-                id="description"
-                formControlProps={{
-                  fullWidth: true,
-                  className: classes.textArea,
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 5,
-                }}
-              />
-              {/* <GridItem xs={12} sm={12} md={12}>
+							<GridItem xs={12} sm={12} md={4}>
+								<Button color="primary">Add Course</Button>
+							</GridItem>
+						</GridContainer>
+					</form>
+				</GridItem>
+			</GridContainer>
+			{/* For Modify books section */}
+			<Divider />
+			<GridContainer justify="center">
+				<GridItem cs={12} sm={12} md={8}>
+					<h2 className={classes.title}>Add Book</h2>
+					<form onSubmit={addBookSubmit}>
+						<GridContainer>
+							<GridItem xs={12} sm={12} md={6}>
+								{/* <CustomInput
+									labelText="Title"
+									id="title"
+									inputProps={{
+										value: addBook.title,
+										onChange: { addBookHandler }
+									}}
+									formControlProps={{
+										fullWidth: true
+									}}
+								/> */}
+								<InputLabel>Title</InputLabel>
+
+								<Input id="title" fullWidth={true} name="title" onChange={addBookHandler} required />
+							</GridItem>
+							<GridItem xs={12} sm={12} md={6}>
+								{/* <CustomInput
+									labelText="Author"
+									id="author"
+									value={addBook.author}
+									formControlProps={{
+										fullWidth: true
+									}}
+								/> */}
+								<InputLabel>Author</InputLabel>
+
+								<Input id="author" fullWidth={true} name="author" onChange={addBookHandler} required />
+							</GridItem>
+							<GridItem xs={12} sm={12} md={6} mt={4} className="pt-2">
+								{/* <CustomInput
+									labelText="ISBN"
+									id="isbn"
+									value={addBook.isbn}
+									formControlProps={{
+										fullWidth: true
+									}}
+								/> */}
+								<InputLabel>ISBN</InputLabel>
+
+								<Input id="isbn" fullWidth={true} name="isbn" onChange={addBookHandler} required />
+							</GridItem>
+							<GridItem xs={12} sm={12} md={6}>
+								{/* <CustomInput
+									labelText="Publisher"
+									id="publisher"
+									onChange={addBookHandler}
+									value={addBook.publisher}
+									formControlProps={{
+										fullWidth: true
+									}}
+								/> */}
+
+								<InputLabel>Publisher</InputLabel>
+
+								<Input
+									id="publisher"
+									name="publisher"
+									onChange={addBookHandler}
+									fullWidth={true}
+									required
+								/>
+							</GridItem>
+							<GridItem xs={12} sm={12} md={6}>
+								<br />
+								<FormControl fullWidth>
+									<Datetime
+										inputProps={{ placeholder: 'Published Date' }}
+										value={addBook.publishDate}
+										name="publishDate"
+										onChange={(e) => {
+											setAddBook((values) => ({
+												...values,
+												publishDate: e
+											}));
+										}}
+									/>
+								</FormControl>
+							</GridItem>
+							<GridItem xs={12} sm={12} md={6}>
+								<FormControl className={classes.formControl} style={{ minWidth: '100%' }}>
+									<InputLabel id="demo-simple-select-label">Level</InputLabel>
+									<Select
+										labelId="demo-simple-select-label"
+										id="demo-simple-select"
+										value={addBook.skillLevel}
+										onChange={(e) => {
+											console.log(e);
+											setAddBook((values) => ({
+												...values,
+												skillLevel: e.target.value
+											}));
+										}}
+									>
+										<MenuItem value="beginner">Beginner</MenuItem>
+										<MenuItem value="intermediate">Intermediate</MenuItem>
+										<MenuItem value="advanced">Advanced</MenuItem>
+									</Select>
+								</FormControl>
+							</GridItem>
+							{/* <CustomInput
+								labelText="Book Description"
+								id="description"
+								formControlProps={{
+									fullWidth: true,
+									className: classes.textArea
+								}}
+								inputProps={{
+									multiline: true,
+									rows: 5
+								}}
+							/> */}
+							<InputLabel>Description</InputLabel>
+
+							<TextField id="description" name="description" onChange={addBookHandler} fullWidth={true} />
+							{/* <GridItem xs={12} sm={12} md={12}>
                 <div className={classes.root}>
                   <input
                     accept="image/*"
@@ -191,13 +280,15 @@ export default function WorkSection() {
                   </label>
                 </div>
               </GridItem> */}
-              <GridItem xs={12} sm={12} md={4}>
-                <Button color="primary">Add Book</Button>
-              </GridItem>
-            </GridContainer>
-          </form>
-        </GridItem>
-      </GridContainer>
-    </div>
-  );
+							<GridItem xs={12} sm={12} md={4}>
+								<Button color="primary" type="submit">
+									Add Book
+								</Button>
+							</GridItem>
+						</GridContainer>
+					</form>
+				</GridItem>
+			</GridContainer>
+		</div>
+	);
 }
