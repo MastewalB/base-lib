@@ -42,7 +42,9 @@ export default function LoginPage() {
 		email: '',
 		password: '',
 		cpassword: '',
-		fname: ''
+		fname: '',
+		lname: '',
+		uname: ''
 	});
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -52,7 +54,8 @@ export default function LoginPage() {
 				email: values.email,
 				password: values.password,
 				firstName: values.fname,
-				lastName: values.fname
+				lastName: values.fname,
+				userName: values.uname
 			})
 			.then((res) => {
 				console.log(res.data);
@@ -92,6 +95,33 @@ export default function LoginPage() {
 												setValues((values) => ({
 													...values,
 													fname: e.target.value
+												}));
+											}}
+										/>
+										<Input
+											placeholder="Last Name"
+											type="text"
+											required
+											value={values.lname}
+											onChange={(e) => {
+												console.log('ef');
+												setValues((values) => ({
+													...values,
+													lname: e.target.value
+												}));
+											}}
+										/>
+
+										<Input
+											placeholder="User name"
+											type="text"
+											required
+											value={values.uname}
+											onChange={(e) => {
+												console.log('ef');
+												setValues((values) => ({
+													...values,
+													uname: e.target.value
 												}));
 											}}
 										/>
