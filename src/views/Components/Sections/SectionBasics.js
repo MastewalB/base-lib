@@ -88,24 +88,12 @@ export default function SectionBasics() {
 	const [ searchItem, setSearchItem ] = useState('');
 
 	const [ bookList, setBookList ] = useState([
-		{
-			id: 1,
-			title: '1',
-			author: '1',
-			isbn: 'asdf',
-			description: 'uradfsdf'
-		},
-		{
-			id: 2,
-			title: '2',
-			author: '2',
-			isbn: 'sdhf',
-			description: 'iudgsfi'
-		}
+
 	]);
 
 	useEffect(() => {
-		axios.get('/books').then((res) => {
+		axios.get('books').then((res) => {
+			console.log("BOOK")
 			setBookList(res.data);
 		});
 	}, []);
@@ -223,7 +211,7 @@ export default function SectionBasics() {
 					</div>
 					<GridContainer justify="center">
 						{/* First row  */}
-
+					{console.log(bookList)}
 						{bookList.map((book) => {
 							return (
 								<GridItem xs={12} sm={12} md={4} key={book.id}>

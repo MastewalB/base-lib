@@ -44,15 +44,21 @@ export default function LoginPage() {
 		e.preventDefault();
 		console.log(values);
 		axios
-			.post(`authentication/login`, {
-				userName: values.userName,
+			.post(`auth/login`, {
+				username: values.userName,
 				password: values.password
 			})
 			.then((res) => res.data)
 			.then((res) => {
 				localStorage.setItem('REACT_TOKEN_AUTH', res.token);
+<<<<<<< HEAD
 				//console.log(res);
 				if (res.roles === 'User') {
+=======
+				console.log(res)
+				
+				if (res.role === 'user') {
+>>>>>>> 91a21ee1323b095a73910e32ff15071c06813564
 					localStorage.setItem('user', res.id);
 					localStorage.setItem('userType', 'user');
 
@@ -64,7 +70,12 @@ export default function LoginPage() {
 
 					history.push('/admin');
 				}
-			});
+			}).catch((e)=>{
+				if(e.response.data.Message==="Already logged in"){
+					history.push('/');
+				}
+				console.log(e.response)
+			})
 	}
 	setTimeout(function () {
 		setCardAnimation('');
