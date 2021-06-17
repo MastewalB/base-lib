@@ -27,9 +27,11 @@ import styles from 'assets/jss/material-kit-react/views/landingPageSections/work
 // import { func } from 'prop-types';
 
 const useStyles = makeStyles(styles);
+
 // const useStyles1 = makeStyles(styles1);
 export default function WorkSection() {
 	const classes = useStyles();
+	const [ resourceToUpload, setResourceToUpload ] = useState(null);
 	const [ addBook, setAddBook ] = useState({
 		title: '',
 		isbn: '',
@@ -50,17 +52,31 @@ export default function WorkSection() {
 	function addBookSubmit(e) {
 		e.preventDefault();
 		console.log(addBook);
+		console.log(resourceToUpload)
+
+		var data = {
+			title: addBook.title,
+			author: addBook.author,
+			isbn: addBook.isbn,
+			publisher: addBook.publisher,
+			publishDate: addBook.publishDate.toString(),
+			description: addBook.description,
+			skillLevel: addBook.skillLevel
+		}
+		var files = new FormData();
+		files.append('file', resourceToUpload); 
+
 
 		axios
-			.post(`books`, {
-				title: addBook.title,
-				author: addBook.author,
-				isbn: addBook.isbn,
-				publisher: addBook.publisher,
-				publishDate: addBook.publishDate.toString(),
-				description: addBook.description,
-				skillLevel: addBook.skillLevel
-			})
+			.post(`books`,data,files,
+			{headers: {
+				'Content-Type': 'multipart/form-data',
+				Accept: 'application/json',
+				Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2M…NzIn0.339j83_5LFPb7XZOmXhgsN-QAKeY0DFiJ4afmkdgeU4`,
+				
+			}}, 
+			
+			)
 			.then((res) => {
 				console.log(res);
 				swal('Book added successfully');
@@ -76,7 +92,10 @@ export default function WorkSection() {
 					coverImg: '',
 					skillLevel: 'beginner'
 				});
-			});
+			}).catch((e)=>{
+				console.log(localStorage.getItem("REACT_TOKEN_AUTH"))
+				console.log(e.response)
+			})
 	}
 
 	return (
@@ -280,6 +299,10 @@ export default function WorkSection() {
                   </label>
                 </div>
               </GridItem> */}
+			  		<GridItem>
+						  <input type="file" required onChange={(e)=>{setResourceToUpload(e.target.files[0])}}  name="file"/>
+
+					  </GridItem>
 							<GridItem xs={12} sm={12} md={4}>
 								<Button color="primary" type="submit">
 									Add Book

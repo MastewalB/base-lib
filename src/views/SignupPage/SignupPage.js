@@ -50,17 +50,20 @@ export default function LoginPage() {
 		e.preventDefault();
 		console.log(values);
 		axios
-			.post(`authenticate`, {
+			.post(`/auth/register`, {
 				email: values.email,
 				password: values.password,
-				firstName: values.fname,
-				lastName: values.fname,
-				userName: values.uname
+				confirm_password: values.cpassword,
+				first_name: values.fname,
+				last_name: values.fname,
+				username: values.uname
 			})
 			.then((res) => {
 				console.log(res.data);
 				history.push(`/login-page`);
-			});
+			}).catch((e)=>{
+				console.log(e.response)
+			})
 	}
 	return (
 		<div>

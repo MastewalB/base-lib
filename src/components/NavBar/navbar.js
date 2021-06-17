@@ -5,16 +5,24 @@ import Button from 'components/CustomButtons/Button.js';
 import Header from 'components/Header/Header.js';
 import { makeStyles } from '@material-ui/core/styles';
 
+
 import styles from 'assets/jss/material-kit-react/components/headerStyle.js';
 
+
+import axios from '../../../src/views/axios'
 const useStyles = makeStyles(styles);
 
 function Navbar() {
 	const classes = useStyles();
 	function logoutFunc() {
+
 		localStorage.removeItem('user');
 		localStorage.removeItem('userType');
 		localStorage.removeItem('REACT_TOKEN_AUTH');
+		axios.post('/auth/logout').then(res=>{
+			console.log(res)
+
+		})
 	}
 	return (
 		<React.Fragment>
