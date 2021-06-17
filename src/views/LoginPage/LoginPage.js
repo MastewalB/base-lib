@@ -34,8 +34,8 @@ const useStyles = makeStyles(styles);
 
 export default function LoginPage() {
 	const history = useHistory();
-	const [ cardAnimaton, setCardAnimation ] = React.useState('cardHidden');
-	const [ values, setValues ] = React.useState({
+	const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
+	const [values, setValues] = React.useState({
 		userName: '',
 		password: ''
 	});
@@ -51,21 +51,22 @@ export default function LoginPage() {
 			.then((res) => res.data)
 			.then((res) => {
 				localStorage.setItem('REACT_TOKEN_AUTH', res.token);
-				if (res.role === 'Student') {
+				//console.log(res);
+				if (res.roles === 'User') {
 					localStorage.setItem('user', res.id);
-					localStorage.setItem('userType', 'student');
+					localStorage.setItem('userType', 'user');
 
-					history.push('/');
+					history.push('/books');
 				} else {
 					localStorage.setItem('user', res.id);
 
-					localStorage.setItem('userType', 'admin');
+					localStorage.setItem('userType', 'Administrator');
 
 					history.push('/admin');
 				}
 			});
 	}
-	setTimeout(function() {
+	setTimeout(function () {
 		setCardAnimation('');
 	}, 700);
 	const classes = useStyles();
