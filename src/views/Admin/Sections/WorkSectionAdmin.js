@@ -65,10 +65,11 @@ export default function WorkSection() {
 		}
 		var files = new FormData();
 		files.append('file', resourceToUpload);
+		files.append('data', data)
 
 
 		axios
-			.post(`books`, data, files,
+			.post(`books`, files,
 				{
 					headers: {
 						'Content-Type': 'multipart/form-data',
