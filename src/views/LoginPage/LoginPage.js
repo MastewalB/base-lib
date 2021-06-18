@@ -2,6 +2,7 @@ import React from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import axios from '../axios';
+import swal from 'sweetalert'
 import { useHistory } from 'react-router-dom';
 
 // import InputAdornment from "@material-ui/core/InputAdornment";
@@ -43,39 +44,58 @@ export default function LoginPage() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		console.log(values);
-		axios
-			.post(`auth/login`, {
-				username: values.userName,
-				password: values.password
-			})
-			.then((res) => res.data)
-			.then((res) => {
-				localStorage.setItem('REACT_TOKEN_AUTH', res.token);
-<<<<<<< HEAD
-				//console.log(res);
-				if (res.roles === 'User') {
-=======
-				console.log(res)
-				
-				if (res.role === 'user') {
->>>>>>> 91a21ee1323b095a73910e32ff15071c06813564
+		try {
+			axios
+				.post(`auth/login`, {
+					username: values.userName,
+					password: values.password
+				})
+				.then((res) => res.data)
+				.then((res) => {
+					console.log("SDF")
+					localStorage.setItem('REACT_TOKEN_AUTH', res.token);
 					localStorage.setItem('user', res.id);
-					localStorage.setItem('userType', 'user');
+					console.log(res)
 
-					history.push('/books');
-				} else {
-					localStorage.setItem('user', res.id);
+					if (res.role === 'user') {
+						localStorage.setItem('user', res.id);
+						localStorage.setItem('userType', 'user');
 
-					localStorage.setItem('userType', 'Administrator');
+						history.push('/books');
+					} else {
+						localStorage.setItem('user', res.id);
 
-					history.push('/admin');
-				}
-			}).catch((e)=>{
-				if(e.response.data.Message==="Already logged in"){
-					history.push('/');
-				}
-				console.log(e.response)
-			})
+						localStorage.setItem('userType', 'Administrator');
+
+						history.push('/admin');
+					}
+				}).catch((e) => {
+					if (e.response.data.Message === "Already logged in") {
+						localStorage.setItem('user', 'df');
+						localStorage.setItem('REACT_TOKEN_AUTH', e.response.data.Token);
+						history.push('/admin');
+
+					} else {
+						swal({
+							title: 'Authentication Error',
+							text: 'Check username and/or password',
+							icon: 'warning',
+							dangerMode: true
+						});
+					}
+
+					console.log(e.response)
+				})
+		}
+		catch (e) {
+			console.log("DSDSF")
+			swal({
+				title: 'Authentication Error',
+				text: 'Check username and/or password',
+				icon: 'warning',
+				dangerMode: true
+			});
+		}
 	}
 	setTimeout(function () {
 		setCardAnimation('');

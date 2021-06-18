@@ -81,31 +81,42 @@ export default function SectionBasics() {
 	const history = useHistory();
 	const classes = useStyles();
 	const classes1 = useStyles1();
-	const [ open, setOpen ] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
 
-	const [ value, setValue ] = React.useState('Beginner');
-	const [ extension, setExtension ] = React.useState('Course');
-	const [ searchItem, setSearchItem ] = useState('');
+	const [value, setValue] = React.useState('Beginner');
+	const [extension, setExtension] = React.useState('Course');
+	const [searchItem, setSearchItem] = useState('');
 
-	const [ bookList, setBookList ] = useState([
-
-	]);
+	const [bookList, setBookList] = useState([]);
 
 	useEffect(() => {
 		axios.get('books').then((res) => {
 			console.log("BOOK")
-			setBookList(res.data);
+			setBookList(res.data.Books);
 		});
-	}, []);
+	}, [searchItem]);
 
 	function searchFunc() {
 		console.log(searchItem);
 		console.log(value);
 		console.log(extension);
+		console.log(bookList);
 
-		// axios.post(`search`,{
+		for (var b in bookList) {
 
-		// })
+			console.log("R")
+			console.log(b)
+
+			if (bookList[b].title === searchItem) {
+				console.log(b.title)
+
+				setBookList([bookList[b]])
+			}
+		}
+
+
+
+
 	}
 
 	const handleChange = (event) => {
@@ -211,7 +222,8 @@ export default function SectionBasics() {
 					</div>
 					<GridContainer justify="center">
 						{/* First row  */}
-					{console.log(bookList)}
+						{console.log("RE")}
+						{console.log(bookList)}
 						{bookList.map((book) => {
 							return (
 								<GridItem xs={12} sm={12} md={4} key={book.id}>

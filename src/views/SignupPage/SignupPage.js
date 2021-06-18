@@ -19,7 +19,7 @@ import CardHeader from 'components/Card/CardHeader.js';
 import CardFooter from 'components/Card/CardFooter.js';
 // import CustomInput from "components/CustomInput/CustomInput.js";
 import Input from '@material-ui/core/Input';
-
+import swal from 'sweetalert';
 // import Grid from "@material-ui/core/grid";
 
 import styles from 'assets/jss/material-kit-react/views/signupPage.js';
@@ -33,12 +33,12 @@ const useStyles = makeStyles(styles);
 
 export default function LoginPage() {
 	const history = useHistory();
-	const [ cardAnimaton, setCardAnimation ] = React.useState('cardHidden');
-	setTimeout(function() {
+	const [cardAnimaton, setCardAnimation] = React.useState('cardHidden');
+	setTimeout(function () {
 		setCardAnimation('');
 	}, 700);
 	const classes = useStyles();
-	const [ values, setValues ] = React.useState({
+	const [values, setValues] = React.useState({
 		email: '',
 		password: '',
 		cpassword: '',
@@ -61,7 +61,14 @@ export default function LoginPage() {
 			.then((res) => {
 				console.log(res.data);
 				history.push(`/login-page`);
-			}).catch((e)=>{
+			}).catch((e) => {
+
+				swal({
+					title: 'Registration error',
+					text: 'Please check your input and try again ',
+					icon: 'warning',
+					dangerMode: true
+				});
 				console.log(e.response)
 			})
 	}

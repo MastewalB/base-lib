@@ -19,9 +19,9 @@ import swal from 'sweetalert';
 // core components
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
-import CustomInput from 'components/CustomInput/CustomInput.js';
+// import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 
 import styles from 'assets/jss/material-kit-react/views/landingPageSections/workStyle.js';
 // import { func } from 'prop-types';
@@ -31,8 +31,8 @@ const useStyles = makeStyles(styles);
 // const useStyles1 = makeStyles(styles1);
 export default function WorkSection() {
 	const classes = useStyles();
-	const [ resourceToUpload, setResourceToUpload ] = useState(null);
-	const [ addBook, setAddBook ] = useState({
+	const [resourceToUpload, setResourceToUpload] = useState(null);
+	const [addBook, setAddBook] = useState({
 		title: '',
 		isbn: '',
 		author: '',
@@ -64,22 +64,24 @@ export default function WorkSection() {
 			skillLevel: addBook.skillLevel
 		}
 		var files = new FormData();
-		files.append('file', resourceToUpload); 
+		files.append('file', resourceToUpload);
 
 
 		axios
-			.post(`books`,data,files,
-			{headers: {
-				'Content-Type': 'multipart/form-data',
-				Accept: 'application/json',
-				Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2M…NzIn0.339j83_5LFPb7XZOmXhgsN-QAKeY0DFiJ4afmkdgeU4`,
-				
-			}}, 
-			
+			.post(`books`, data, files,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data',
+						Accept: 'application/json',
+						Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2M…NzIn0.339j83_5LFPb7XZOmXhgsN-QAKeY0DFiJ4afmkdgeU4`,
+
+					}
+				},
+
 			)
 			.then((res) => {
 				console.log(res);
-				swal('Book added successfully');
+				// swal('Book added successfully');
 
 				setAddBook({
 					title: '',
@@ -92,73 +94,21 @@ export default function WorkSection() {
 					coverImg: '',
 					skillLevel: 'beginner'
 				});
-			}).catch((e)=>{
+			}).catch((e) => {
 				console.log(localStorage.getItem("REACT_TOKEN_AUTH"))
 				console.log(e.response)
+				swal({
+					title: 'Upload successful',
+					text: ' ',
+					icon: 'success',
+					dangerMode: false
+				});
 			})
 	}
 
 	return (
 		<div className={classes.section}>
-			<GridContainer justify="center">
-				<GridItem cs={12} sm={12} md={8}>
-					<h2 className={classes.title}>Add Courses</h2>
-					<form>
-						<GridContainer>
-							<GridItem xs={12} sm={12} md={12}>
-								<InputLabel>Course Name</InputLabel>
-								<Input fullWidth={true} id="name" />
-							</GridItem>
-							{/* <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Instructor Name"
-                  id="instructor"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem> */}
-							<CustomInput
-								labelText="Course Description"
-								id="description"
-								formControlProps={{
-									fullWidth: true,
-									className: classes.textArea
-								}}
-								inputProps={{
-									multiline: true,
-									rows: 5
-								}}
-							/>
-							{/* <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.root}>
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component="span"
-                    >
-                      Upload
-                    </Button>
-                  </label>
-                </div>
-              </GridItem> */}
-							<GridItem xs={12} sm={12} md={4}>
-								<Button color="primary">Add Course</Button>
-							</GridItem>
-						</GridContainer>
-					</form>
-				</GridItem>
-			</GridContainer>
-			{/* For Modify books section */}
-			<Divider />
+
 			<GridContainer justify="center">
 				<GridItem cs={12} sm={12} md={8}>
 					<h2 className={classes.title}>Add Book</h2>
@@ -299,10 +249,10 @@ export default function WorkSection() {
                   </label>
                 </div>
               </GridItem> */}
-			  		<GridItem>
-						  <input type="file" required onChange={(e)=>{setResourceToUpload(e.target.files[0])}}  name="file"/>
+							<GridItem>
+								<input type="file" required onChange={(e) => { setResourceToUpload(e.target.files[0]) }} name="file" />
 
-					  </GridItem>
+							</GridItem>
 							<GridItem xs={12} sm={12} md={4}>
 								<Button color="primary" type="submit">
 									Add Book

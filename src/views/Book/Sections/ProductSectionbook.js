@@ -22,29 +22,34 @@ const useStyles = makeStyles(styles);
 
 export default function ProductSection({ id }) {
 	const classes = useStyles();
-	const [ Book, setBook ] = useState({
+	const [Book, setBook] = useState({
 		id: 1,
 		title: 'New World',
 		description: 'best book'
 	});
+
 	useEffect(
 		() => {
-			axios.get(`books/${id}`).then((res) => {
+			axios.get(`book/${id}`).then((res) => {
+				console.log("BOOK")
 				console.log(res.data)
 				setBook(res.data);
-			});
+			}).catch((e) => {
+				console.log(e.response)
+			})
 		},
-		[ id ]
+		[]
 	);
 
 	function resourceDownloadFunc() {
 		console.log('Downloading');
 		axios
-			.get(`books/${id}/Download`, {
+			.get(`book/${id}/download`, {
 				responseType: 'blob'
 			})
 			.then((response) => {
-				const url = window.URL.createObjectURL(new Blob([ response.data ]));
+				console.log("DD")
+				const url = window.URL.createObjectURL(new Blob([response.data]));
 				const link = document.createElement('a');
 				link.href = url;
 				link.setAttribute('download', Book.book_file); //or any other extension

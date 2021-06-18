@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/grid';
 import Button from 'components/CustomButtons/Button.js';
 import Header from 'components/Header/Header.js';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 
 import styles from 'assets/jss/material-kit-react/components/headerStyle.js';
@@ -13,15 +14,26 @@ import axios from '../../../src/views/axios'
 const useStyles = makeStyles(styles);
 
 function Navbar() {
+	const history = useHistory();
 	const classes = useStyles();
-	function logoutFunc() {
-
+	function logoutFunc(e) {
+		e.preventDefault()
 		localStorage.removeItem('user');
+		console.log("LOG")
 		localStorage.removeItem('userType');
 		localStorage.removeItem('REACT_TOKEN_AUTH');
-		axios.post('/auth/logout').then(res=>{
+		history.push('/')
+		axios.post('/auth/logout').then(res => {
+			console.log("LOG")
 			console.log(res)
+			localStorage.removeItem('user');
+			localStorage.removeItem('userType');
+			localStorage.removeItem('REACT_TOKEN_AUTH');
+			history.push('/')
 
+		}).catch((e) => {
+			console.log("ERR")
+			console.log(e.response)
 		})
 	}
 	return (
@@ -65,7 +77,7 @@ function Navbar() {
 									>
 										Logout
 									</Button>
-									{localStorage.getItem('userType') === 'admin' && (
+									{localStorage.getItem('user') && (
 										<Button
 											href="/admin"
 											className={classes.navLink}
