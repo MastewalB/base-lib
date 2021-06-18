@@ -53,6 +53,7 @@ export default function WorkSection() {
 		e.preventDefault();
 		console.log(addBook);
 		console.log(resourceToUpload)
+		var token = localStorage.getItem('REACT_TOKEN_AUTH')
 
 		var data = {
 			title: addBook.title,
@@ -73,7 +74,7 @@ export default function WorkSection() {
 			{headers: {
 				'Content-Type': 'multipart/form-data',
 				Accept: 'application/json',
-				Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2M…NzIn0.339j83_5LFPb7XZOmXhgsN-QAKeY0DFiJ4afmkdgeU4`,
+				Authorization: `Bearer ${token}`,
 				
 			}}, 
 			
