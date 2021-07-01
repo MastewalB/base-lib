@@ -57,7 +57,7 @@ export default function LoginPage() {
 					localStorage.setItem('user', res.id);
 					console.log(res)
 
-					if (res.role === 'user') {
+					if (res.is_admin === 'user') {
 						localStorage.setItem('user', res.id);
 						localStorage.setItem('userType', 'user');
 

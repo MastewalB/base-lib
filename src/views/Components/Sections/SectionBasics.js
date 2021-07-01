@@ -229,7 +229,7 @@ export default function SectionBasics() {
 								<GridItem xs={12} sm={12} md={4} key={book.id}>
 									<Card className={classes1.root}>
 										<CardActionArea>
-											<CardMedia className={classes1.media} image={imgs} title="default" />
+											<CardMedia className={classes1.media} image={imgs} title={book.title} />
 											<CardContent>
 												<Typography gutterBottom variant="h5" component="h2">
 													{book.title}

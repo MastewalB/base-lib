@@ -51,10 +51,10 @@ export default function WorkSection() {
 	}
 	function addBookSubmit(e) {
 		e.preventDefault();
-		console.log(addBook);
-		console.log(resourceToUpload)
+		//console.log(addBook);
+		//console.log(resourceToUpload)
 
-		var data = {
+		var book_data = {
 			title: addBook.title,
 			author: addBook.author,
 			isbn: addBook.isbn,
@@ -64,8 +64,10 @@ export default function WorkSection() {
 			skillLevel: addBook.skillLevel
 		}
 		var files = new FormData();
+
+		files.append('data', JSON.stringify(book_data));
 		files.append('file', resourceToUpload);
-		files.append('data', data)
+		console.log(files.get('data'))
 
 
 		axios
@@ -73,16 +75,22 @@ export default function WorkSection() {
 				{
 					headers: {
 						'Content-Type': 'multipart/form-data',
-						Accept: 'application/json',
-						Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2M…NzIn0.339j83_5LFPb7XZOmXhgsN-QAKeY0DFiJ4afmkdgeU4`,
+						"Accept": 'application/json',
+						'Access-Control': 'Allow-Origin',
+						Authorization: `Bearer ${localStorage.getItem("REACT_TOKEN_AUTH")}`,
 
 					}
-				},
+				}
 
 			)
 			.then((res) => {
-				console.log(res);
-				// swal('Book added successfully');
+				//console.log(res);
+				swal({
+					title: 'Upload successful',
+					text: res.title,
+					icon: 'success',
+					dangerMode: false
+				});
 
 				setAddBook({
 					title: '',
@@ -96,14 +104,9 @@ export default function WorkSection() {
 					skillLevel: 'beginner'
 				});
 			}).catch((e) => {
-				console.log(localStorage.getItem("REACT_TOKEN_AUTH"))
+				//console.log(localStorage.getItem("REACT_TOKEN_AUTH"))
 				console.log(e.response)
-				swal({
-					title: 'Upload successful',
-					text: ' ',
-					icon: 'success',
-					dangerMode: false
-				});
+
 			})
 	}
 
