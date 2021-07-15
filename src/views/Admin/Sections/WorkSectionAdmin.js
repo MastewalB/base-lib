@@ -19,7 +19,6 @@ import swal from 'sweetalert';
 // core components
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
-// import CustomInput from 'components/CustomInput/CustomInput.js';
 import Button from 'components/CustomButtons/Button.js';
 // import Divider from '@material-ui/core/Divider';
 
@@ -28,7 +27,6 @@ import styles from 'assets/jss/material-kit-react/views/landingPageSections/work
 
 const useStyles = makeStyles(styles);
 
-// const useStyles1 = makeStyles(styles1);
 export default function WorkSection() {
 	const classes = useStyles();
 	const [resourceToUpload, setResourceToUpload] = useState(null);
@@ -111,71 +109,50 @@ export default function WorkSection() {
 	}
 
 	return (
-		<div className={classes.section}>
+		<div >
 
-			<GridContainer justify="center">
-				<GridItem cs={12} sm={12} md={8}>
+			<GridContainer cs={12} sm={12} md={12} justify="center"  className={classes.background}>
+				<GridItem cs={12} sm={12} md={10}>
 					<h2 className={classes.title}>Add Book</h2>
 					<form onSubmit={addBookSubmit}>
 						<GridContainer>
 							<GridItem xs={12} sm={12} md={6}>
-								{/* <CustomInput
-									labelText="Title"
-									id="title"
-									inputProps={{
-										value: addBook.title,
-										onChange: { addBookHandler }
-									}}
-									formControlProps={{
-										fullWidth: true
-									}}
-								/> */}
-								<InputLabel>Title</InputLabel>
+								
+								<InputLabel className={classes.formlabel}>Title</InputLabel>
 
-								<Input id="title" fullWidth={true} name="title" onChange={addBookHandler} required />
+								<Input className={classes.forminput} id="title" fullWidth={true} name="title" onChange={addBookHandler} required />
 							</GridItem>
 							<GridItem xs={12} sm={12} md={6}>
-								{/* <CustomInput
-									labelText="Author"
-									id="author"
-									value={addBook.author}
-									formControlProps={{
-										fullWidth: true
-									}}
-								/> */}
-								<InputLabel>Author</InputLabel>
+								<InputLabel className={classes.formlabel}>Author</InputLabel>
 
-								<Input id="author" fullWidth={true} name="author" onChange={addBookHandler} required />
+								<Input 
+									className={classes.forminput} 
+									id="author" 
+									fullWidth={true} 
+									name="author" 
+									onChange={addBookHandler} 
+									required 
+								/>
 							</GridItem>
 							<GridItem xs={12} sm={12} md={6} mt={4} className="pt-2">
-								{/* <CustomInput
-									labelText="ISBN"
-									id="isbn"
-									value={addBook.isbn}
-									formControlProps={{
-										fullWidth: true
-									}}
-								/> */}
-								<InputLabel>ISBN</InputLabel>
+								
+								<InputLabel className={classes.formlabel}>ISBN</InputLabel>
 
-								<Input id="isbn" fullWidth={true} name="isbn" onChange={addBookHandler} required />
+								<Input 
+									className={classes.forminput} 
+									id="isbn" 
+									fullWidth={true} 
+									name="isbn" 
+									onChange={addBookHandler} 
+									required />
 							</GridItem>
 							<GridItem xs={12} sm={12} md={6}>
-								{/* <CustomInput
-									labelText="Publisher"
-									id="publisher"
-									onChange={addBookHandler}
-									value={addBook.publisher}
-									formControlProps={{
-										fullWidth: true
-									}}
-								/> */}
-
-								<InputLabel>Publisher</InputLabel>
-
+								<InputLabel className={classes.formlabel}>Publisher</InputLabel>
 								<Input
+									className={classes.forminput}
 									id="publisher"
 									name="publisher"
+									variant="outlined"
 									onChange={addBookHandler}
 									fullWidth={true}
 									required
@@ -183,6 +160,7 @@ export default function WorkSection() {
 							</GridItem>
 							<GridItem xs={12} sm={12} md={6}>
 								<br />
+								{/* <InputLabel className={classes.formlabel}>Published Date</InputLabel> */}
 								<FormControl fullWidth>
 									<Datetime
 										inputProps={{ placeholder: 'Published Date' }}
@@ -199,7 +177,7 @@ export default function WorkSection() {
 							</GridItem>
 							<GridItem xs={12} sm={12} md={6}>
 								<FormControl className={classes.formControl} style={{ minWidth: '100%' }}>
-									<InputLabel id="demo-simple-select-label">Level</InputLabel>
+									<InputLabel className={classes.formlabel} id="demo-simple-select-label">Level</InputLabel>
 									<Select
 										labelId="demo-simple-select-label"
 										id="demo-simple-select"
@@ -218,41 +196,15 @@ export default function WorkSection() {
 									</Select>
 								</FormControl>
 							</GridItem>
-							{/* <CustomInput
-								labelText="Book Description"
-								id="description"
-								formControlProps={{
-									fullWidth: true,
-									className: classes.textArea
-								}}
-								inputProps={{
-									multiline: true,
-									rows: 5
-								}}
-							/> */}
-							<InputLabel>Description</InputLabel>
+							<InputLabel className={classes.formlabel}>Description</InputLabel>
 
-							<TextField id="description" name="description" onChange={addBookHandler} fullWidth={true} />
-							{/* <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.root}>
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component="span"
-                    >
-                      Upload
-                    </Button>
-                  </label>
-                </div>
-              </GridItem> */}
+							<TextField 
+								className={classes.forminput} 
+								id="description" 
+								name="description" 
+								onChange={addBookHandler} 
+								fullWidth={true} />
+							
 							<GridItem>
 								<input type="file" required onChange={(e) => { setResourceToUpload(e.target.files[0]) }} name="file" />
 
