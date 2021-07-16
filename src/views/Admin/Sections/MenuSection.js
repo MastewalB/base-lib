@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import {AccountCircleRounded, AddBox, Help, History } from "@material-ui/icons";
+import {AccountCircleRounded, AddBox, Help} from "@material-ui/icons";
 // import List from "@material-ui/icons/List";
 
 // core components
@@ -19,7 +19,6 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/dashb
 import WorkSection from './WorkSectionAdmin.js';
 import DashboardComponent from './Dashboard.js';
 import AccountProfileDetails from 'views/Admin/Sections/SectionAccountDetails.js';
-import RecentPosts from './RecentPosts.js';
 const useStyles = makeStyles(styles);
 
 const MenuSection = () => {
@@ -51,12 +50,6 @@ const MenuSection = () => {
                     tabIcon: AccountCircleRounded,
                     tabContent: (
                       <AccountProfileDetails  />
-                    ),
-                  },{
-                    tabButton: "View Recent Posts",
-                    tabIcon: History,
-                    tabContent: (
-                      <RecentPosts  />
                     ),
                   },
                   {
