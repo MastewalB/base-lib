@@ -43,7 +43,7 @@ export default function LoginPage() {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log(values);
+		//console.log(values);
 		try {
 			axios
 				.post(`auth/login`, {
@@ -52,17 +52,19 @@ export default function LoginPage() {
 				})
 				.then((res) => res.data)
 				.then((res) => {
-					console.log("SDF")
+
 					localStorage.setItem('REACT_TOKEN_AUTH', res.token);
 					localStorage.setItem('user', res.id);
-					console.log(res)
 
-					if (res.is_admin === 'user') {
+
+					if (res.is_admin === 'false') {
+
 						localStorage.setItem('user', res.id);
 						localStorage.setItem('userType', 'user');
 
 						history.push('/books');
-					} else {
+					} else if (res.is_admin === 'true') {
+
 						localStorage.setItem('user', res.id);
 
 						localStorage.setItem('userType', 'Administrator');
@@ -73,8 +75,12 @@ export default function LoginPage() {
 					if (e.response.data.Message === "Already logged in") {
 						localStorage.setItem('user', 'df');
 						localStorage.setItem('REACT_TOKEN_AUTH', e.response.data.Token);
-						history.push('/admin');
+						if (e.response.data.User.is_admin == true) {
 
+							history.push('/admin');
+						} else if (e.response.data.User.is_admin == false) {
+							history.push('/user');
+						}
 					} else {
 						swal({
 							title: 'Authentication Error',

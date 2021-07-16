@@ -6,7 +6,6 @@ import {
   Grid
 } from '@material-ui/core';
 import NumberOfViews from './NumberOfViews';
-import MostView from './MostView';
 import NumberOfDownloads from './NumberOfDownloads';
 // import { white } from '@material-ui/color/white';
 const DashboardComponent = () => (
@@ -44,16 +43,7 @@ const DashboardComponent = () => (
           >
             <NumberOfDownloads />
           </Grid>
-          <Grid
-            item
-            lg={10}
-            sm={12}
-            xl={12}
-            xs={12}
-          >
-            <MostView />
-          </Grid>
-         
+
         </Grid>
       </Container>
     </Box>

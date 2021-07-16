@@ -12,6 +12,8 @@ import SignupPage from 'views/SignupPage/SignupPage.js';
 import Courses from 'views/Courses/Courses.js';
 import Books from 'views/Book/Book.js';
 import Admin from 'views/Admin/Admin.js';
+import Home from 'views/Home/Home.js';
+
 import theme from './theme';
 import { ThemeProvider } from '@material-ui/core';
 var hist = createBrowserHistory();
@@ -26,7 +28,8 @@ ReactDOM.render(
 				<Route path="/courses" component={Courses} />
 				<Route path="/books/:id" component={Books} />
 				<Route path="/admin" component={Admin} />
-				<Route path="/" component={Components} />
+				<Route path="/user" component={Components} />
+				<Route path="/" component={Home} />
 			</Switch>
 		</Router>
 	</ThemeProvider>,

@@ -91,31 +91,24 @@ export default function SectionBasics() {
 
 	useEffect(() => {
 		axios.get('books').then((res) => {
-			console.log("BOOK")
+			//console.log("BOOK")
 			setBookList(res.data.Books);
 		});
 	}, [searchItem]);
 
 	function searchFunc() {
-		console.log(searchItem);
-		console.log(value);
-		console.log(extension);
-		console.log(bookList);
 
-		const bookMatches = bookList.filter(book =>{
-			book.title.includes(searchItem);
+
+		const filteredSearch = bookList.filter(book => {
+			if (value !== '') {
+				console.log(book);
+				return book.title.toLowerCase().includes(searchItem.toLowerCase()) && book.skill_level.toLowerCase() === value.toLowerCase();
+			} else {
+				return book.title.toLowerCase().includes(searchItem.toLowerCase());
+			}
+
 		});
-		setBookList(bookMatches) 
-
-		// const filteredSearch = bookList.filter(book =>{
-		// 	if (value !== ''){
-		// 		book.title.includes(searchItem) && book.level === value;
-		// 	}else{
-		// 		book.title.includes(searchItem);
-		// 	}
-			
-		// });
-		// setBookList(filteredSearch) 
+		setBookList(filteredSearch)
 
 
 		// for (var b in bookList) {
@@ -123,9 +116,8 @@ export default function SectionBasics() {
 		// 	console.log("R")
 		// 	console.log(b)
 
-		// 	if (bookList[b].title === searchItem) {
+		// 	if (bookList[b].title.includes(searchItem)) {
 		// 		console.log(b.title)
-
 		// 		setBookList([bookList[b]])
 		// 	}
 		// }
@@ -195,22 +187,22 @@ export default function SectionBasics() {
 											value={value}
 											onChange={handleChange}
 										>
-										<FormControlLabel
-											value="beginner" 
-											control={<Radio />}
-											label="Beginner"
-										/>
+											<FormControlLabel
+												value="beginner"
+												control={<Radio />}
+												label="Beginner"
+											/>
 
-										<FormControlLabel
-											value="intermediate"
-											control={<Radio />}
-											label="Intermediate"
-										/>
-										<FormControlLabel 
-											value="Expert" 
-											control={<Radio />} 
-											label="Expert"
-										/>
+											<FormControlLabel
+												value="intermediate"
+												control={<Radio />}
+												label="Intermediate"
+											/>
+											<FormControlLabel
+												value="Expert"
+												control={<Radio />}
+												label="Expert"
+											/>
 										</RadioGroup>
 									</FormControl>
 									<ListItemText primary="" />
@@ -228,16 +220,16 @@ export default function SectionBasics() {
 											value={extension}
 											onChange={handleExtension}
 										>
-										<FormControlLabel 
-											value="course" 
-											control={<Radio />} 
-											label="Course" 
-										/>
-										<FormControlLabel 
-											value="book"
-											control={<Radio />} 
-											label="Book" 
-										/>
+											<FormControlLabel
+												value="course"
+												control={<Radio />}
+												label="Course"
+											/>
+											<FormControlLabel
+												value="book"
+												control={<Radio />}
+												label="Book"
+											/>
 										</RadioGroup>
 									</FormControl>
 									<ListItemText primary="" />
